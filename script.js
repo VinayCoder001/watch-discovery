@@ -390,3 +390,107 @@ function moreInfofun(details) {
     individualSection.appendChild(InfoDiv);
     individualSection.classList.add("active");
 }
+
+
+function contactUsFunc() {
+
+    // Prevent multiple Contact Us popups
+    if (document.getElementById("contactUs")) return;
+
+    // Create the dark overlay
+    let contactDiv = document.createElement("div");
+    contactDiv.id = "contactUs";
+
+    // Create the main popup box
+    let popupContent = document.createElement("div");
+    popupContent.className = "contact-popup";
+
+    // Create the watch image on the left
+    let watchImage = document.createElement("img");
+    watchImage.src = "CONTACT.png"
+    watchImage.alt = "Noise Twist Go watch";
+    watchImage.className = "contact-watch-image";
+
+    // Create the text container on the right
+    let textContent = document.createElement("div");
+    textContent.className = "contact-content";
+
+    // Small heading
+    let Conheading = document.createElement("p");
+    Conheading.className = "contact-label";
+    Conheading.textContent = "CONTACT US";
+
+    // Main greeting
+    let greeting = document.createElement("h2");
+    greeting.textContent = "Have a question?";
+
+    // Description
+    let description = document.createElement("p");
+    description.textContent =
+        "We'd love to hear from you. Get in touch with us.";
+
+    // Email section
+    let emailDiv = document.createElement("div");
+    emailDiv.className = "contact-detail";
+
+    let emailHeading = document.createElement("h3");
+    emailHeading.textContent = "Email Us";
+
+    let emailDes = document.createElement("p");
+    emailDes.textContent = "WdiscoverySupport@gmail.com";
+
+    emailDiv.appendChild(emailHeading);
+    emailDiv.appendChild(emailDes);
+
+    // Response time section
+    let responseSection = document.createElement("div");
+    responseSection.className = "contact-detail";
+
+    let responseHeading = document.createElement("h3");
+    responseHeading.textContent = "Response Time";
+
+    let responseText = document.createElement("p");
+    responseText.textContent = "Usually within 24–48 hours.";
+
+    responseSection.appendChild(responseHeading);
+    responseSection.appendChild(responseText);
+
+    // Create the close button
+    let closeButton = document.createElement("button");
+    closeButton.textContent = "×";
+    closeButton.className = "contact-close";
+
+    closeButton.addEventListener("click", () => {
+        contactDiv.remove();
+    });
+
+    // Add all text to the right-side container
+    textContent.appendChild(Conheading);
+    textContent.appendChild(greeting);
+    textContent.appendChild(description);
+    textContent.appendChild(emailDiv);
+    textContent.appendChild(responseSection);
+
+    // Add image, text and close button to the popup
+    popupContent.appendChild(watchImage);
+    popupContent.appendChild(textContent);
+    popupContent.appendChild(closeButton);
+
+    // Add popup to the overlay
+    contactDiv.appendChild(popupContent);
+
+    // Close when clicking the dark background
+    contactDiv.addEventListener("click", (event) => {
+        if (event.target === contactDiv) {
+            contactDiv.remove();
+        }
+    });
+
+    // Display the popup
+    document.body.appendChild(contactDiv);
+}
+
+// Open Contact Us popup
+contactusButton.addEventListener("click", () => {
+    contactUsFunc();
+});

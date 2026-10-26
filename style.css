@@ -552,6 +552,182 @@ body {
 }
 
 
+/* ==============================
+   CONTACT US POPUP
+================================ */
+
+/* Dark overlay behind the popup */
+#contactUs {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    background: rgba(5, 10, 20, 0.85);
+    box-sizing: border-box;
+}
+/* Main popup container */
+#contactUs .contact-popup {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 35px;
+
+    width: 950px;
+    max-width: 100%;
+    min-height: 500px;
+
+    padding: 30px 45px;
+    box-sizing: border-box;
+
+    background: #101B2D;
+    color: #F3EFE7;
+
+    border: 1px solid #263A55;
+    border-radius: 14px;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Watch image on the left */
+#contactUs .contact-watch-image {
+    width: 48%;
+    height: 440px;
+
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Text container on the right */
+#contactUs .contact-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Small gold heading */
+
+/* Main greeting */
+#contactUs .contact-content h2 {
+    margin: 0 0 15px;
+
+    color: #F3EFE7;
+    font-size: 32px;
+    line-height: 1.4;
+}
+
+/* Description and contact text */
+#contactUs .contact-content p {
+    color: #C2CAD6;
+    line-height: 1.7;
+    overflow-wrap: break-word;
+}
+
+/* Email and response-time sections */
+#contactUs .contact-detail {
+    margin-top: 28px;
+}
+
+/* Contact detail headings */
+#contactUs .contact-detail h3 {
+    margin: 0 0 10px;
+
+    color: #D5B779;
+    font-size: 16px;
+}
+
+/* Email and response-time descriptions */
+#contactUs .contact-detail p {
+    margin: 0;
+
+    font-size: 15px;
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+/* Close button */
+#contactUs .contact-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 38px;
+    height: 38px;
+
+    padding: 0;
+
+    color: #F3EFE7;
+    background: transparent;
+    border: none;
+
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1;
+
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+/* Gold hover effect */
+#contactUs .contact-close:hover {
+    color: #D5B779;
+}
+
+/* ==============================
+   MOBILE RESPONSIVENESS
+================================ */
+
+@media (max-width: 600px) {
+
+    #contactUs {
+        padding: 15px;
+    }
+
+    #contactUs .contact-popup {
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+
+        flex-direction: column;
+        gap: 20px;
+
+        min-height: auto;
+        padding: 25px;
+    }
+
+    #contactUs .contact-watch-image {
+        width: 100%;
+        height: 200px;
+    }
+
+    #contactUs .contact-content {
+        width: 100%;
+    }
+
+    #contactUs .contact-label {
+        margin-bottom: 15px;
+    }
+
+    #contactUs .contact-content h2 {
+        font-size: 26px;
+    }
+
+    #contactUs .contact-detail {
+        margin-top: 20px;
+    }
+}
+
+
 /* ==================================================
    19. FOOTER
    ================================================== */
@@ -676,4 +852,14 @@ a:focus-visible {
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
     }
+}
+
+
+/* Contact Us popup label */
+#contactUs .contact-label {
+    color: #D5B779  !important;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin: 0 0 25px;
 }
