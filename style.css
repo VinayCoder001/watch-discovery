@@ -1,0 +1,679 @@
+/* ==================================================
+   1. GLOBAL SETTINGS
+   ================================================== */
+
+/* CSS variables let us reuse the same colors everywhere. */
+:root {
+    --navy: #101B2D;
+    --ivory: #F3EFE7;
+    --gold: #D5B779;
+    --gold-dark: #745615;
+    --white: #FFFFFF;
+    --border: #E5DFD2;
+    --text: #202020;
+}
+
+/* Remove default browser spacing.
+   border-box includes padding and borders in element dimensions. */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Default styling for the entire webpage. */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--ivory);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+
+/* ==================================================
+   2. TOP NAVIGATION BAR
+   ================================================== */
+
+#Top-nav {
+    width: 100%;
+    min-height: 70px;
+    padding: 10px 4%;
+
+    background-color: var(--navy);
+    color: var(--ivory);
+
+    /* Places navbar items in a horizontal row. */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Groups the logo and website name. */
+#logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Website name appearance. */
+.logo-name {
+    color: var(--ivory);
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+/* Arranges navbar buttons horizontally. */
+#top-nav-button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Common styling for navbar buttons. */
+#top-nav-button button {
+    padding: 8px 16px;
+    min-height: 38px;
+
+    background-color: transparent;
+    color: var(--ivory);
+
+    border: 1px solid var(--gold);
+    border-radius: 6px;
+
+    font-size: 14px;
+    cursor: pointer;
+
+    /* Smoothly animates hover changes. */
+    transition: background-color 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+}
+
+/* Changes button appearance on hover. */
+#top-nav-button button:hover {
+    background-color: var(--gold);
+    color: var(--navy);
+    transform: translateY(-2px);
+}
+
+
+/* ==================================================
+   3. FILTER BAR
+   ================================================== */
+
+#bottom-nav {
+    width: 100%;
+    min-height: 55px;
+
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border);
+}
+
+/* Positions the category and strap filters. */
+#filters {
+    width: 100%;
+    min-height: 55px;
+    padding: 10px 4%;
+
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Styles the dropdown menus. */
+#filters select {
+    padding: 6px 10px;
+
+    background-color: var(--white);
+    color: var(--text);
+
+    border: 1px solid #C9C2B5;
+    border-radius: 5px;
+
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
+/* ==================================================
+   4. MAIN WATCH COLLECTION
+   ================================================== */
+
+#main {
+    width: 100%;
+    min-height: 430px;
+    background-color: var(--navy);
+}
+
+
+/* ==================================================
+   5. 3D CAROUSEL CONTAINER
+   ================================================== */
+
+/* Wraps the previous arrow, watches and next arrow. */
+#watchCarousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    width: 100%;
+    min-height: 440px;
+    padding: 30px 3%;
+
+    background-color: var(--navy);
+
+    /* Gives 3D transformations a sense of depth. */
+    perspective: 1000px;
+}
+
+
+/* ==================================================
+   6. VISIBLE CAROUSEL AREA
+   ================================================== */
+
+/* Holds all the watch cards. */
+#displayWatches {
+    position: relative;
+
+    /* Takes up the available space between the arrows. */
+    flex: 1;
+    min-width: 0;
+    height: 380px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Hides cards that move outside the carousel area. */
+    overflow: hidden;
+
+    /* Adds depth to 3D transformations inside this area. */
+    perspective: 1000px;
+}
+
+
+/* ==================================================
+   7. BASE WATCH CARD
+   ================================================== */
+
+/* Styles every card before its carousel position is assigned. */
+#displayWatches .watchDetails {
+    /* Removes cards from normal document flow,
+       allowing them to overlap at the same position. */
+    position: absolute;
+
+    /* Places the card's top-left corner at the container center. */
+    left: 50%;
+    top: 50%;
+
+    width: 280px;
+    max-width: 70%;
+    min-width: 0;
+
+    padding: 20px 12px;
+    gap: 12px;
+
+    /* Arranges the watch details vertically. */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: var(--ivory);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    text-align: center;
+    overflow-wrap: anywhere;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+    /* Centers the card around its reference point.
+       Starts it small and hidden until JavaScript assigns a position. */
+    transform: translate(-50%, -50%) scale(0.7);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    /* Animates changes when JavaScript changes card classes. */
+    transition:
+        transform 0.5s ease,
+        opacity 0.5s ease,
+        visibility 0.5s ease,
+        box-shadow 0.3s ease;
+
+    /* Preserves the 3D transformation style. */
+    transform-style: preserve-3d;
+
+    /* Hides the back face when a card rotates. */
+    backface-visibility: hidden;
+}
+
+
+/* ==================================================
+   8. CENTER WATCH
+   ================================================== */
+
+/* JavaScript adds "active" to the selected center card. */
+#displayWatches .watchDetails.active {
+    transform: translate(-50%, -50%)
+               translateX(0)
+               scale(1);
+
+    opacity: 1;
+    visibility: visible;
+
+    /* Places the center card above the side cards. */
+    z-index: 3;
+
+    /* Allows users to interact with this card. */
+    pointer-events: auto;
+
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ==================================================
+   9. LEFT WATCH
+   ================================================== */
+
+/* JavaScript adds "left" to the previous watch. */
+#displayWatches .watchDetails.left {
+    transform: translate(-50%, -50%)
+               translateX(-240px)
+               scale(0.78)
+               rotateY(18deg);
+
+    opacity: 0.75;
+    visibility: visible;
+    z-index: 2;
+    pointer-events: auto;
+}
+
+
+/* ==================================================
+   10. RIGHT WATCH
+   ================================================== */
+
+/* JavaScript adds "right" to the next watch. */
+#displayWatches .watchDetails.right {
+    transform: translate(-50%, -50%)
+               translateX(240px)
+               scale(0.78)
+               rotateY(-18deg);
+
+    opacity: 0.75;
+    visibility: visible;
+    z-index: 2;
+    pointer-events: auto;
+}
+
+
+/* ==================================================
+   11. WATCH IMAGES
+   ================================================== */
+
+/* Keeps images at a consistent size without cropping them. */
+#displayWatches .watchDetails img {
+    width: 100%;
+    max-width: 260px;
+    height: 180px;
+    object-fit: contain;
+}
+
+
+/* ==================================================
+   12. WATCH CARD BUTTONS
+   ================================================== */
+
+.watchDetails button {
+    width: 130px;
+    min-height: 40px;
+    padding: 8px 12px;
+
+    background-color: var(--gold-dark);
+    color: var(--white);
+
+    border: none;
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.watchDetails button:hover {
+    background-color: var(--navy);
+    transform: translateY(-1px);
+}
+
+
+/* ==================================================
+   13. CAROUSEL ARROW BUTTONS
+   ================================================== */
+
+#prevWatch,
+#nextWatch {
+    /* Prevents the buttons from shrinking. */
+    flex: 0 0 45px;
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+
+    background-color: var(--navy);
+    color: var(--ivory);
+
+    font-size: 22px;
+    cursor: pointer;
+
+    /* Keeps arrows above overlapping cards. */
+    z-index: 5;
+
+    transition: background-color 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+}
+
+/* Arrow hover effect. */
+#prevWatch:hover,
+#nextWatch:hover {
+    background-color: var(--gold);
+    color: var(--navy);
+    transform: scale(1.08);
+}
+
+
+/* ==================================================
+   14. POPUP BACKGROUND
+   ================================================== */
+
+/* Hidden until JavaScript adds the "active" class. */
+#individualSection {
+    display: none;
+
+    /* Keeps the overlay fixed to the browser window. */
+    position: fixed;
+    inset: 0;
+
+    /* Places it above the carousel. */
+    z-index: 1000;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    /* Darkens and blurs the background. */
+    background: rgba(10, 18, 32, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Shows the overlay when the popup opens. */
+#individualSection.active {
+    display: flex;
+}
+
+
+/* ==================================================
+   15. POPUP BOX
+   ================================================== */
+
+#moreInfoSection {
+    position: relative;
+
+    width: 650px;
+    max-width: 100%;
+    max-height: 85vh;
+
+    /* Allows scrolling if content is too tall. */
+    overflow-y: auto;
+
+    padding: 35px 30px;
+
+    background-color: var(--ivory);
+    color: var(--navy);
+
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 22px;
+
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+
+    font-size: 17px;
+    text-align: center;
+
+    /* Hides the scrollbar in Firefox. */
+    scrollbar-width: none;
+}
+
+/* Hides the scrollbar in Chrome and similar browsers. */
+#moreInfoSection::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* ==================================================
+   16. POPUP WATCH IMAGE
+   ================================================== */
+
+#moreInfoSection img {
+    width: 260px;
+    max-width: 100%;
+    height: 200px;
+
+    object-fit: contain;
+
+    background-color: var(--white);
+    padding: 12px;
+    border-radius: 16px;
+}
+
+
+/* ==================================================
+   17. POPUP CLOSE BUTTON
+   ================================================== */
+
+#moreInfoSection button {
+    /* Positions the X relative to the popup box. */
+    position: absolute;
+    top: 14px;
+    right: 14px;
+
+    width: 36px;
+    height: 36px;
+
+    background-color: var(--navy);
+    color: var(--ivory);
+
+    border: none;
+    border-radius: 50%;
+
+    font-size: 23px;
+    line-height: 1;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+#moreInfoSection button:hover {
+    background-color: #304563;
+    transform: rotate(90deg);
+}
+
+
+/* ==================================================
+   18. AMAZON PURCHASE LINK
+   ================================================== */
+
+#moreInfoSection a {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 12px 24px;
+
+    background-color: var(--navy);
+    color: var(--ivory);
+
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+#moreInfoSection a:hover {
+    background-color: #304563;
+    transform: translateY(-2px);
+}
+
+
+/* ==================================================
+   19. FOOTER
+   ================================================== */
+
+#footer {
+    width: 100%;
+    padding: 18px 10px;
+
+    background-color: var(--navy);
+    color: var(--ivory);
+
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+/* ==================================================
+   20. KEYBOARD ACCESSIBILITY
+   ================================================== */
+
+/* Makes focused controls visible when navigating by keyboard. */
+button:focus-visible,
+select:focus-visible,
+a:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+}
+
+
+/* ==================================================
+   21. RESPONSIVE DESIGN
+   ================================================== */
+
+@media (max-width: 700px) {
+
+    /* Allow navbar content to wrap on smaller screens. */
+    #Top-nav {
+        flex-wrap: wrap;
+        padding: 12px 4%;
+    }
+
+    .logo-name {
+        font-size: 24px;
+    }
+
+    #top-nav-button {
+        gap: 8px;
+    }
+
+    #top-nav-button button {
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+
+    /* Allow filters to wrap if needed. */
+    #filters {
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    #watchCarousel {
+        gap: 5px;
+        padding: 20px 2%;
+        min-height: 390px;
+    }
+
+    #displayWatches {
+        height: 340px;
+    }
+
+    /* Make the cards narrower on phones. */
+    #displayWatches .watchDetails {
+        width: 240px;
+        max-width: 78%;
+        padding: 16px 10px;
+    }
+
+    /* Reduce side-card distance on mobile. */
+    #displayWatches .watchDetails.left {
+        transform: translate(-50%, -50%)
+                   translateX(-125px)
+                   scale(0.72)
+                   rotateY(15deg);
+    }
+
+    #displayWatches .watchDetails.right {
+        transform: translate(-50%, -50%)
+                   translateX(125px)
+                   scale(0.72)
+                   rotateY(-15deg);
+    }
+
+    #displayWatches .watchDetails img {
+        height: 150px;
+    }
+
+    #prevWatch,
+    #nextWatch {
+        flex-basis: 34px;
+        width: 34px;
+        height: 34px;
+        font-size: 18px;
+    }
+
+    #moreInfoSection {
+        padding: 35px 18px 22px;
+    }
+}
+
+
+/* ==================================================
+   22. REDUCED MOTION
+   ================================================== */
+
+/* Respects users who prefer fewer animations. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
