@@ -2,11 +2,13 @@
 let contactusButton = document.getElementById("contactusButton");
 let HomeButton = document.getElementById("HomeButton");
 let wishlistButton = document.getElementById("wishlistButton");
+let wishlistSection = document.getElementById("wishlistSection")
 let categoryFilter = document.getElementById("category-filter");
 let strapFilter = document.getElementById("strapFilter");
 let individualSection = document.getElementById("individualSection");
 let displayWatches = document.getElementById("displayWatches");
-
+let watchCarousel = document.getElementById("watchCarousel");
+let wishlist = [];
 
 // All watch data
 let Watches = [
@@ -152,7 +154,7 @@ let Watches = [
 // CREATE WATCH CARDS
 // --------------------------------------------------
 
-function createWatchDiv(details) {
+function createWatchDiv(details, container) {
 
     // Create the main card element
     let WatchDiv = document.createElement("div");
@@ -185,9 +187,7 @@ function createWatchDiv(details) {
     WatchDiv.appendChild(watchimage);
     WatchDiv.appendChild(watchPrice);
     WatchDiv.appendChild(moreInfo);
-
-    // Add the card to the carousel container
-    displayWatches.appendChild(WatchDiv);
+    container.appendChild(WatchDiv)
 
     // Open the popup when More Info is clicked
     moreInfo.addEventListener("click", () => {
@@ -195,10 +195,23 @@ function createWatchDiv(details) {
     });
 }
 
+function showWishlist() {
+    wishlistSection.innerHTML = "";
 
+    wishlist.forEach(details => {
+        createWatchDiv(details, wishlistSection)
+    });
+}
+
+wishlistButton.addEventListener("click", () => {
+displayWatches.style.display = "none";
+    wishlistSection.style.display = "grid";
+    watchCarousel.style.display="none"
+    showWishlist()
+})
 // Initially display all watches
 Watches.forEach(details => {
-    createWatchDiv(details);
+    createWatchDiv(details, displayWatches);
 });
 
 
@@ -224,7 +237,7 @@ function filterWatches() {
 
         // Create a card only if both filters match
         if (categoryMatches && strapMatches) {
-            createWatchDiv(details);
+            createWatchDiv(details, displayWatches);
         }
     });
 
@@ -327,7 +340,6 @@ document.getElementById("nextWatch").addEventListener("click", () => {
 // Set the initial carousel positions
 updateCarousel();
 
-
 // Update the carousel when either filter changes
 categoryFilter.addEventListener("change", filterWatches);
 strapFilter.addEventListener("change", filterWatches);
@@ -355,7 +367,6 @@ function moreInfofun(details) {
         individualSection.classList.remove("active");
     });
 
-    InfoDiv.appendChild(closeButton);
 
     // Display the selected watch's name
     let watchname = document.createTextNode(details.name);
@@ -369,6 +380,15 @@ function moreInfofun(details) {
     watchimage.src = details.image;
     watchimage.alt = details.name;
 
+    // heart button
+    let likeBu = document.createElement("button")
+    likeBu.innerHTML = "♡";
+    likeBu.className = "like-button";
+    likeBu.addEventListener("click", () => {
+        if (!wishlist.includes(details)) {
+            wishlist.push(details);
+        }
+    })
     // Display the price
     let watchPrice = document.createTextNode(`Price: ₹${details.price}`);
 
@@ -383,6 +403,10 @@ function moreInfofun(details) {
     InfoDiv.appendChild(watchname);
     InfoDiv.appendChild(brandName);
     InfoDiv.appendChild(watchimage);
+    InfoDiv.appendChild(likeBu);
+    console.log(likeBu);
+    InfoDiv.appendChild(closeButton);
+
     InfoDiv.appendChild(watchPrice);
     InfoDiv.appendChild(productLink);
 
@@ -493,4 +517,14 @@ function contactUsFunc() {
 // Open Contact Us popup
 contactusButton.addEventListener("click", () => {
     contactUsFunc();
+});
+HomeButton.addEventListener("click", () => {
+    individualSection.classList.remove("active");
+    individualSection.innerHTML = "";
+
+    watchCarousel.style.display = "flex";
+    displayWatches.style.display = "";
+    wishlistSection.style.display = "none";
+
+    filterWatches();
 });
